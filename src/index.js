@@ -50,7 +50,8 @@ class Game extends React.Component {
     super(props);
     this.state = {
       history: [{
-        squares: Array(9).fill(null)
+        squares: Array(9).fill(null),
+        movePosition: null
       }],
       xIsNext: true,
       stepNumber: 0
@@ -58,7 +59,7 @@ class Game extends React.Component {
   }
 
   handleClickOnSquare(position) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
+    const history = this.state.history.slice(0, this.state.stepNumber + 1); // throw away all future moves from this point, since we're now rewriting history by clicking a square
     const current = history[history.length - 1];
     let squares = [...current.squares];
     let xIsNext = this.state.xIsNext;
@@ -70,7 +71,10 @@ class Game extends React.Component {
     squares[position] = xIsNext ? 'X' : 'O';
     xIsNext = !xIsNext;
     this.setState({
-      history: history.concat([{squares}]),
+      history: history.concat([{
+        squares,
+        movePosition: position
+      }]),
       xIsNext,
       stepNumber: history.length
     });
@@ -95,7 +99,9 @@ class Game extends React.Component {
     }
 
     const moves = history.map((move, index) => {
-      const description = index ? `Go to move ${index}` : 'Go to game start';
+      const col = move.movePosition % 3 + 1;
+      const row = Math.ceil((move.movePosition + 1) / 3);
+      const description = index ? `Go to move ${index} (col: ${col}, row: ${row})` : 'Go to game start';
 
       return <li key={index}>
                 <button onClick={() => this.jumpTo(index)}>
