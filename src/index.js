@@ -54,7 +54,7 @@ class Game extends React.Component {
         movePosition: null
       }],
       xIsNext: true,
-      stepNumber: 0
+      stepNumber: 0,
     };
   }
 
@@ -83,7 +83,7 @@ class Game extends React.Component {
   jumpTo(move) {
     this.setState({
       xIsNext: (move % 2) === 0,
-      stepNumber: move
+      stepNumber: move,
     })
   };
 
@@ -103,8 +103,15 @@ class Game extends React.Component {
       const row = Math.ceil((move.movePosition + 1) / 3);
       const description = index ? `Go to move ${index} (col: ${col}, row: ${row})` : 'Go to game start';
 
+      // let fontWeight = 'normal';
+      // if (index === this.state.stepNumber) {
+      //   fontWeight = 'bold';
+      // }
+      // let fontWeight = 'normal';
+      const fontWeight = (index === this.state.stepNumber) ? 'bold' : 'normal';
+
       return <li key={index}>
-                <button onClick={() => this.jumpTo(index)}>
+                <button style={{fontWeight: `${fontWeight}`}} onClick={() => this.jumpTo(index)}>
                   {description}
                 </button>
               </li>
