@@ -16,6 +16,7 @@ function Square(props) {
 class Board extends React.Component {
   renderSquare(i) {
     return <Square
+      key={i}
       position={i}
       value={this.props.squares[i]}
       handleClick={() => this.props.onClick(i)}
@@ -23,23 +24,24 @@ class Board extends React.Component {
   }
 
   render() {
+    let board = [];
+
+    for (let row = 0; row < 3; row++) {
+      let boardRow = [];
+      for (let col = 0; col < 3; col++) {
+        boardRow.push(this.renderSquare((3 * row) + col));
+      }
+
+      board.push (
+                    <div key={row} className="board-row">
+                      {boardRow}
+                    </div>
+                  )
+    }
+
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {board}
       </div>
     );
   }
@@ -102,19 +104,13 @@ class Game extends React.Component {
       const col = move.movePosition % 3 + 1;
       const row = Math.ceil((move.movePosition + 1) / 3);
       const description = index ? `Go to move ${index} (col: ${col}, row: ${row})` : 'Go to game start';
-
-      // let fontWeight = 'normal';
-      // if (index === this.state.stepNumber) {
-      //   fontWeight = 'bold';
-      // }
-      // let fontWeight = 'normal';
       const fontWeight = (index === this.state.stepNumber) ? 'bold' : 'normal';
 
       return <li key={index}>
                 <button style={{fontWeight: `${fontWeight}`}} onClick={() => this.jumpTo(index)}>
                   {description}
                 </button>
-              </li>
+             </li>
     });
 
     return (
