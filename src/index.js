@@ -70,8 +70,7 @@ class Game extends React.Component {
     let squares = [...current.squares];
     let xIsNext = this.state.xIsNext;
 
-    const winResult = this.calculateWinner(squares);
-    if (squares[position] || (winResult && winResult.winner)) {
+    if (squares[position] || this.calculateWinner(squares)) {
       return;
     }
 
@@ -138,11 +137,10 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winResult = this.calculateWinner(current.squares);
-    const winner = winResult ? winResult.winner : null;
+
     let status;
-    if (winner) {
-        status = `Winner: ${winner}`
-        console.log(`${winResult.winningLine}`);
+    if (winResult) {
+        status = `Winner: ${winResult.winner}`;
     } else {
         status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
     }
