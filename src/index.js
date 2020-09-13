@@ -1,3 +1,6 @@
+// My solution to the React tic tac toe tutorial
+// https://reactjs.org/tutorial/tutorial.html
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -111,12 +114,7 @@ class Game extends React.Component {
   };
 
   allSquaresFilled(squares) {
-    for (const square of squares) {
-      if (!square) {
-        return false;
-      }
-    }
-    return true;
+    return !(squares.includes(null));
   };
 
   calculateWinner(squares) {
