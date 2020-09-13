@@ -3,8 +3,6 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Square from './square';
-import Board from './board';
 import Game from './game';
 import './index.css';
 
