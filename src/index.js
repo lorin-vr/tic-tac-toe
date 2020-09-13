@@ -110,6 +110,15 @@ class Game extends React.Component {
     })
   };
 
+  allSquaresFilled(squares) {
+    for (const square of squares) {
+      if (!square) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   calculateWinner(squares) {
     const lines = [
       [0, 1, 2],
@@ -141,6 +150,8 @@ class Game extends React.Component {
     let status;
     if (winResult) {
         status = `Winner: ${winResult.winner}`;
+    } else if (this.allSquaresFilled(current.squares)) {
+        status = 'Game over. It\'s a draw.'
     } else {
         status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
     }
